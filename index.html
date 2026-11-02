@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vishal Kurre · Software Engineer</title>
+  <meta name="description" content="Vishal Kurre, Software Engineer in Houston, TX. Python backends, event-driven microservices, network automation and LLM integration.">
+  <meta property="og:title" content="Vishal Kurre · Software Engineer">
+  <meta property="og:description" content="Python backends, event-driven microservices, network automation and LLM integration.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23007AFF'/><text x='32' y='42' font-family='-apple-system,Helvetica,Arial' font-size='28' font-weight='700' fill='white' text-anchor='middle'>VK</text></svg>">
+  <link rel="stylesheet" href="assets/puppertino.css">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="p-auto-dark-mode">
+
+  <header class="nav p-glass-sm">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#top">Vishal Kurre</a>
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#work">Work</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- Hero -->
+    <section class="hero p-container">
+      <div class="avatar" aria-hidden="true">VK</div>
+      <p class="eyebrow">Software Engineer · Houston, TX</p>
+      <h1 class="hero-title">I build Python backends that take the toil out of operations.</h1>
+      <p class="hero-sub">
+        Event-driven microservices, network automation and LLM integration.
+        Currently building the workflow engine of a network automation platform
+        for global banking infrastructure at J.P. Morgan.
+      </p>
+      <div class="hero-actions">
+        <a class="p-button p-button-primary p-button-touch-large" href="mailto:vishalkurre2811@gmail.com">Get in touch</a>
+        <a class="p-button p-button-secondary p-button-touch-large" href="https://www.linkedin.com/in/vishal-pradh/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="p-button p-button-tinted p-button-touch-large" href="https://github.com/VishalKurre2811" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </section>
+
+    <!-- Impact numbers -->
+    <section class="stats p-container" aria-label="Highlights">
+      <div class="stat"><span class="stat-num">1,500</span><span class="stat-label">ServiceNow incidents closed from one root-cause fix</span></div>
+      <div class="stat"><span class="stat-num">15+</span><span class="stat-label">connectors in a Kafka workflow engine</span></div>
+      <div class="stat"><span class="stat-num">35%</span><span class="stat-label">lower API latency at Microsoft</span></div>
+      <div class="stat"><span class="stat-num">7+</span><span class="stat-label">years building production software</span></div>
+    </section>
+
+    <!-- Selected work -->
+    <section id="work" class="section p-container">
+      <div class="section-head">
+        <h2 class="section-title">Selected work</h2>
+        <div class="p-segmented-controls p-segmented-radius p-segmented-internal-radius filter" role="tablist" aria-label="Filter projects">
+          <button class="active" role="tab" aria-selected="true" data-filter="all">All</button>
+          <button role="tab" aria-selected="false" data-filter="work">Professional</button>
+          <button role="tab" aria-selected="false" data-filter="personal">Personal</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <article class="card" data-kind="work">
+          <span class="tag tag-blue">J.P. Morgan</span>
+          <h3>Executor Microservice</h3>
+          <p>The workflow import and execution engine of a network automation platform. It routes Kafka events to the right workflow and publishes real-time status across services, with 15+ connectors: ServiceNow, Splunk, email, a data store, a UI, and LLM services on the OpenAI and Anthropic APIs.</p>
+          <ul class="chips"><li>Python</li><li>FastAPI</li><li>Kafka</li><li>pytest</li></ul>
+        </article>
+
+        <article class="card" data-kind="work">
+          <span class="tag tag-orange">Root cause</span>
+          <h3>Proxy alert flood</h3>
+          <p>Traced a high-volume flood of proxy alerts to one shared root cause and closed 1,500 related ServiceNow incidents. Turned the fix into a reusable Proxy Events workflow with event correlation, so similar alert IDs no longer need their own code.</p>
+          <ul class="chips"><li>Splunk</li><li>ServiceNow</li><li>Event correlation</li></ul>
+        </article>
+
+        <article class="card" data-kind="work">
+          <span class="tag tag-green">Reliability</span>
+          <h3>48-hour device-health workflow</h3>
+          <p>An event-driven workflow that watches device health for 48 hours after an incident and updates ServiceNow automatically, replacing manual follow-up checks.</p>
+          <ul class="chips"><li>Event-driven</li><li>Kafka</li><li>ServiceNow</li></ul>
+        </article>
+
+        <article class="card" data-kind="work">
+          <span class="tag tag-indigo">AI adoption</span>
+          <h3>GitHub Copilot rollout</h3>
+          <p>Drove team-wide GitHub Copilot adoption with repository-level instruction files and guardrails for safe AI-assisted development, and supported MCP integrations.</p>
+          <ul class="chips"><li>GitHub Copilot</li><li>MCP</li></ul>
+        </article>
+
+        <article class="card" data-kind="personal">
+          <span class="tag tag-purple">Side project</span>
+          <h3>AI market-analysis system</h3>
+          <p>Ingests news every minute, computes 100+ technical indicators across 10+ APIs, and combines the Kronos time-series model with OpenAI and Anthropic APIs. An orchestrator coordinates 15 task-specific agents. Paper trading only, no real money.</p>
+          <ul class="chips"><li>Python</li><li>Kronos</li><li>LLM agents</li></ul>
+        </article>
+
+        <article class="card" data-kind="personal">
+          <span class="tag tag-teal">Side project</span>
+          <h3>Trade Analysis workbench</h3>
+          <p>A US equities research app: technical indicators, a multi-agent LLM swarm (Gemini, Anthropic, Ollama) producing signals with entry, stop and target levels, Kronos forecasts, SEC 13F holdings and a paper-trading account.</p>
+          <ul class="chips"><li>FastAPI</li><li>React</li><li>TypeScript</li><li>SQLite</li></ul>
+        </article>
+
+        <article class="card" data-kind="personal">
+          <span class="tag tag-pink">Side project</span>
+          <h3>CityWheels</h3>
+          <p>A city-based rideshare and community app with ride-request feeds, city and state group chats, direct messages and an admin dashboard.</p>
+          <ul class="chips"><li>React</li><li>Firebase</li><li>Flask</li><li>Docker</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="section p-container">
+      <h2 class="section-title">Experience</h2>
+      <ul class="p-list p-list-touch p-list-inset exp">
+        <li class="p-list-row">
+          <div class="p-list-label">
+            <span class="p-list-title">Software Engineer · J.P. Morgan</span>
+            <span class="p-list-subtitle">Network automation and monitoring reliability for global banking infrastructure</span>
+          </div>
+          <span class="p-list-detail">2025 – now</span>
+        </li>
+        <li class="p-list-row">
+          <div class="p-list-label">
+            <span class="p-list-title">Software Engineer · Microsoft</span>
+            <span class="p-list-subtitle">GenAI with Azure OpenAI, NLP microservices on AKS, Kafka and Event Hubs pipelines</span>
+          </div>
+          <span class="p-list-detail">2023 – 2025</span>
+        </li>
+        <li class="p-list-row">
+          <div class="p-list-label">
+            <span class="p-list-title">Graduate Research Assistant · Oregon State University</span>
+            <span class="p-list-subtitle">FastAPI data APIs, ML models on SageMaker and Vertex AI, OpenCV tooling</span>
+          </div>
+          <span class="p-list-detail">2021 – 2023</span>
+        </li>
+        <li class="p-list-row">
+          <div class="p-list-label">
+            <span class="p-list-title">Python Developer · Amazon</span>
+            <span class="p-list-subtitle">Python microservices and serverless AWS for e-commerce data processing</span>
+          </div>
+          <span class="p-list-detail">2020 – 2021</span>
+        </li>
+        <li class="p-list-row">
+          <div class="p-list-label">
+            <span class="p-list-title">Software Developer · Realcom Infocom</span>
+            <span class="p-list-subtitle">Java Spring APIs at an early-stage startup; led a team of four</span>
+          </div>
+          <span class="p-list-detail">2018 – 2020</span>
+        </li>
+      </ul>
+
+      <h3 class="sub-title">Education</h3>
+      <ul class="p-list p-list-touch p-list-inset exp">
+        <li class="p-list-row">
+          <div class="p-list-label">
+            <span class="p-list-title">MS Computer Science, minor in AI</span>
+            <span class="p-list-subtitle">Oregon State University, Corvallis, OR</span>
+          </div>
+          <span class="p-list-detail">2023</span>
+        </li>
+        <li class="p-list-row">
+          <div class="p-list-label">
+            <span class="p-list-title">BTech Computer Science and Engineering</span>
+            <span class="p-list-subtitle">Aurora Technological Research Institute, India</span>
+          </div>
+          <span class="p-list-detail">2018</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="section p-container">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills">
+        <div class="skill-group">
+          <h3>Backend</h3>
+          <ul class="chips"><li>Python</li><li>FastAPI</li><li>Flask</li><li>Django</li><li>REST</li><li>GraphQL</li><li>Java Spring</li><li>pytest</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Events and data</h3>
+          <ul class="chips"><li>Apache Kafka</li><li>Azure Event Hubs</li><li>PostgreSQL</li><li>MySQL</li><li>MongoDB</li><li>Redis</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>AI and LLMs</h3>
+          <ul class="chips"><li>OpenAI API</li><li>Azure OpenAI</li><li>Anthropic API</li><li>LangChain</li><li>Hugging Face</li><li>spaCy</li><li>PyTorch</li><li>scikit-learn</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Cloud and DevOps</h3>
+          <ul class="chips"><li>AWS</li><li>Azure</li><li>GCP</li><li>Docker</li><li>Kubernetes</li><li>Terraform</li><li>GitHub Actions</li><li>Azure DevOps</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Observability and ops</h3>
+          <ul class="chips"><li>Splunk</li><li>Grafana</li><li>OpenTelemetry</li><li>Prometheus</li><li>ServiceNow</li><li>SevOne</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>AI-assisted development</h3>
+          <ul class="chips"><li>GitHub Copilot</li><li>MCP</li><li>Claude Code</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section p-container">
+      <div class="contact p-glass-sm">
+        <h2 class="section-title">Let's talk</h2>
+        <p>Open to Python backend, network automation and AI engineering roles in Houston or remote in the US.</p>
+        <div class="hero-actions">
+          <a class="p-button p-button-primary p-button-touch-large" href="mailto:vishalkurre2811@gmail.com">vishalkurre2811@gmail.com</a>
+          <a class="p-button p-button-secondary p-button-touch-large" href="https://www.linkedin.com/in/vishal-pradh/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer p-container">
+    <p>© 2026 Vishal Kurre · Built with <a href="https://github.com/codedgar/Puppertino" target="_blank" rel="noopener">Puppertino</a></p>
+  </footer>
+
+  <script>
+    // Project filter for the segmented control
+    document.querySelectorAll('.filter button').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.filter button').forEach(function (b) {
+          b.classList.toggle('active', b === btn);
+          b.setAttribute('aria-selected', b === btn);
+        });
+        var f = btn.dataset.filter;
+        document.querySelectorAll('.grid .card').forEach(function (c) {
+          c.hidden = f !== 'all' && c.dataset.kind !== f;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
