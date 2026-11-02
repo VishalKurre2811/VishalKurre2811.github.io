@@ -29,7 +29,7 @@ const CHAPTERS = [
     sky: 0xbfe0f7,
   },
   {
-    id: 'amazon', short: 'Amazon', at: 3, kind: 'warehouse', color: 0xf0a030, chip: '#D98A0F',
+    id: 'amazon', short: 'Amazon', at: 3, kind: 'helix', color: 0xf0a030, chip: '#D98A0F',
     when: 'Sep 2020 – Aug 2021', title: 'Python Developer',
     where: 'Amazon',
     list: [
@@ -46,7 +46,7 @@ const CHAPTERS = [
     sky: 0x9ccbf2,
   },
   {
-    id: 'osu', short: 'Oregon State', at: 6, kind: 'campus', color: 0xb5523b, chip: '#D73F09',
+    id: 'osu', short: 'Oregon State', at: 6, kind: 'union', color: 0xb5523b, chip: '#D73F09',
     when: 'Sep 2021 – Jun 2023 · Corvallis, OR', title: 'MS Computer Science, minor in AI',
     where: 'Oregon State University · Graduate Research Assistant',
     list: [
@@ -57,7 +57,7 @@ const CHAPTERS = [
     sky: 0x9fd0e8,
   },
   {
-    id: 'microsoft', short: 'Microsoft', at: 7, kind: 'glass', color: 0x3ba7d9, chip: '#0A84D0',
+    id: 'microsoft', short: 'Microsoft', at: 7, kind: 'office', color: 0x3a5260, chip: '#0A84D0',
     when: 'Aug 2023 – Jun 2025', title: 'Software Engineer',
     where: 'Microsoft',
     list: [
@@ -68,7 +68,7 @@ const CHAPTERS = [
     sky: 0xb7d3f0,
   },
   {
-    id: 'jpm', short: 'J.P. Morgan', at: 8, kind: 'bank', color: 0x2c3e66, chip: '#3A5BA0',
+    id: 'jpm', short: 'J.P. Morgan', at: 8, kind: 'tower', color: 0x4a6280, chip: '#3A5BA0',
     when: 'Jul 2025 – now · Houston, TX', title: 'Software Engineer',
     where: 'J.P. Morgan · network automation',
     list: [
@@ -299,48 +299,162 @@ const BUILD = {
     g.add(box(1.2, 2, 0.2, 0x5a4636, 0, 0, 2.55));
     return g;
   },
-  warehouse(c) {
+  // Spiral glass shell wrapped by a planted ramp (after Amazon's HQ2 Helix design)
+  helix(c) {
     const g = new THREE.Group();
-    g.add(box(14, 4.5, 7, 0xd8d4cc));
-    g.add(box(14.2, 0.8, 7.2, c.color, 0, 4.5));
-    for (let i = -2; i <= 2; i++) g.add(box(2, 2.6, 0.2, 0x8e8a83, i * 2.6, 0, 3.55));
-    return g;
-  },
-  campus(c) {
-    const g = new THREE.Group();
-    g.add(box(12, 5, 6, c.color));
-    g.add(box(12.4, 0.5, 6.4, 0xe8dcc8, 0, 5));
-    windows(g, 12, 5, 3, 2, 6, 0.5, 0xfff1d6);
-    const tower = box(2.6, 10, 2.6, c.color, 0, 0, 0);
-    tower.position.y = 5; g.add(tower);
-    const clock = new THREE.Mesh(new THREE.CylinderGeometry(0.8, 0.8, 0.15, 24), mat(0xffffff));
-    clock.rotation.x = Math.PI / 2; clock.position.set(0, 8.2, 1.36); g.add(clock);
-    const cap = new THREE.Mesh(new THREE.ConeGeometry(2.1, 2.6, 4), mat(0xd73f09));
-    cap.position.set(0, 11.3, 0); cap.rotation.y = Math.PI / 4; cap.castShadow = true; g.add(cap);
-    return g;
-  },
-  glass(c) {
-    const g = new THREE.Group();
-    const gm = (h, x, z) => {
-      const m = new THREE.Mesh(new THREE.BoxGeometry(3.6, h, 3.6),
-        mat(c.color, { roughness: 0.15, metalness: 0.4, transparent: true, opacity: 0.92 }));
-      m.position.set(x, h / 2, z); m.castShadow = true; g.add(m);
-      for (let y = 1.5; y < h; y += 1.5) g.add(box(3.7, 0.08, 3.7, 0xe6f4fb, x, y, z));
-    };
-    gm(14, -2.2, 0); gm(10, 2.2, 0.6); gm(7, 0, 3.4);
-    return g;
-  },
-  bank(c) {
-    const g = new THREE.Group();
-    g.add(box(8, 3, 6, 0xe8e4dc));
-    for (let i = -3; i <= 3; i++) {
-      const col = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.28, 3, 12), mat(0xf5f3ef));
-      col.position.set(i * 1.1, 1.5, 3.3); col.castShadow = true; g.add(col);
+    const H = 16;
+    const radius = u => 5.2 * Math.pow(1 - u, 0.55) * (0.75 + 0.25 * Math.sin(Math.PI * u * 1.2));
+    const profile = n => Array.from({ length: n + 1 }, (_, i) => new THREE.Vector2(Math.max(radius(i / n), 0.05), (i / n) * H));
+    const shell = new THREE.Mesh(new THREE.LatheGeometry(profile(40), 48),
+      mat(0x7fb6e0, { roughness: 0.1, metalness: 0.5, transparent: true, opacity: 0.9 }));
+    shell.castShadow = true; g.add(shell);
+    // Low-res wireframe of the same shape draws the triangular glass lattice
+    const lattice = new THREE.Mesh(new THREE.LatheGeometry(profile(14), 20),
+      new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.55 }));
+    lattice.scale.setScalar(1.01); g.add(lattice);
+    const spire = new THREE.Mesh(new THREE.ConeGeometry(0.25, 2.2, 8), mat(0xf4f4f4));
+    spire.position.y = H + 0.6; g.add(spire);
+    // Green ramp spiralling up the outside, dotted with trees
+    const turns = 2.6, pts = [];
+    for (let i = 0; i <= 120; i++) {
+      const u = i / 120 * 0.88, a = u * turns * Math.PI * 2, r = radius(u) + 0.3;
+      pts.push(new THREE.Vector3(Math.cos(a) * r, u * H + 0.3, Math.sin(a) * r));
     }
-    const t = new THREE.Mesh(new THREE.BoxGeometry(5, 18, 5), mat(c.color, { roughness: 0.3, metalness: 0.3 }));
-    t.position.set(0, 12, -0.5); t.castShadow = true; g.add(t);
-    for (let y = 4; y < 21; y += 1.2) g.add(box(5.1, 0.12, 5.1, 0x9fb4d9, 0, y, -0.5));
-    g.add(box(1.6, 2, 1.6, 0x9fb4d9, 0, 21, -0.5));
+    const rampCurve = new THREE.CatmullRomCurve3(pts);
+    const ramp = new THREE.Mesh(new THREE.TubeGeometry(rampCurve, 160, 0.32, 6), mat(0x5f9e4f));
+    ramp.castShadow = true; g.add(ramp);
+    const leaf = mat(0x4f8f45), bloom = mat(0xc06aa8);
+    for (let i = 1; i < 28; i++) {
+      const tree = new THREE.Mesh(new THREE.ConeGeometry(0.35, 0.9, 6), i % 7 === 3 ? bloom : leaf);
+      tree.position.copy(rampCurve.getPointAt(i / 28)).add(new THREE.Vector3(0, 0.6, 0));
+      g.add(tree);
+    }
+    // Low curved glass podium wrapping the front
+    const podium = new THREE.Mesh(new THREE.CylinderGeometry(6.4, 6.4, 1.6, 48, 1, true, -Math.PI * 0.35, Math.PI * 0.95),
+      mat(0x8fc3e6, { roughness: 0.1, metalness: 0.4, transparent: true, opacity: 0.85, side: THREE.DoubleSide }));
+    podium.position.y = 0.8; g.add(podium);
+    const podiumTop = new THREE.Mesh(new THREE.TorusGeometry(6.4, 0.18, 6, 48, Math.PI * 0.95), mat(0x5f9e4f));
+    podiumTop.rotation.set(Math.PI / 2, 0, -Math.PI * 0.15); podiumTop.position.y = 1.6; g.add(podiumTop);
+    g.userData.top = H + 1.7;
+    return g;
+  },
+  // Brick hall with a cream colonnade, arched portico and dome (after OSU's Memorial Union)
+  union(c) {
+    const g = new THREE.Group();
+    const brick = 0xb5523b, cream = 0xefe4cc;
+    g.add(box(18, 4.6, 6, brick));
+    g.add(box(18.6, 0.5, 6.6, cream, 0, 4.6));
+    g.add(box(18.6, 0.5, 6.6, cream, 0, 0));
+    windows(g, 18, 4.6, 3, 2, 12, 0.3, 0xfff1d6);
+    const colM = mat(0xf7f0e2);
+    for (let i = -8; i <= 8; i++) {
+      if (Math.abs(i) <= 2) continue;
+      const col = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.2, 4.1, 10), colM);
+      col.position.set(i * 1.0, 2.55, 3.35); col.castShadow = true; g.add(col);
+    }
+    // Central portico: taller block, big columns, arched doorway
+    g.add(box(5.6, 6.4, 7, brick, 0, 0, 0.6));
+    g.add(box(6, 0.6, 7.4, cream, 0, 6.4, 0.6));
+    for (const x of [-2.2, -1.3, 1.3, 2.2]) {
+      const col = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.28, 5.8, 12), colM);
+      col.position.set(x, 3.2, 4.25); col.castShadow = true; g.add(col);
+    }
+    g.add(box(1.6, 3.2, 0.1, 0x3d2a22, 0, 0.3, 4.15));
+    const arch = new THREE.Mesh(new THREE.CircleGeometry(0.8, 20, 0, Math.PI), mat(0x3d2a22));
+    arch.position.set(0, 3.5, 4.16); g.add(arch);
+    // Dome on a drum
+    const drum = new THREE.Mesh(new THREE.CylinderGeometry(1.8, 1.8, 1.2, 24), mat(cream));
+    drum.position.set(0, 7.6, 0); g.add(drum);
+    const dome = new THREE.Mesh(new THREE.SphereGeometry(1.8, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2), mat(0xe9e4d6));
+    dome.position.set(0, 8.2, 0); dome.castShadow = true; g.add(dome);
+    // Steps and the walk out front
+    g.add(box(6.4, 0.3, 1.2, 0xd8d0c0, 0, 0, 4.7));
+    const path = new THREE.Mesh(new THREE.PlaneGeometry(2.4, 5), mat(0xd8d0c0));
+    path.rotation.x = -Math.PI / 2; path.position.set(0, 0.03, 7.6); g.add(path);
+    g.userData.top = 10;
+    return g;
+  },
+  // White stacked slabs with dark ribbon windows (after a Microsoft office campus)
+  office(c) {
+    const g = new THREE.Group();
+    const white = 0xf4f5f6;
+    const glassM = mat(c.color, { roughness: 0.2, metalness: 0.5 });
+    const wing = (w, d, x, z, floors) => {
+      const fh = 1.7;
+      const lobby = new THREE.Mesh(new THREE.BoxGeometry(w - 0.8, 1.6, d - 0.8), mat(0x5d8f8a, { roughness: 0.15, metalness: 0.4 }));
+      lobby.position.set(x, 0.8, z); g.add(lobby);
+      for (let f = 0; f < floors; f++) {
+        const y = 1.6 + f * fh;
+        g.add(box(w + 0.2, 0.6, d + 0.2, white, x, y - 0.1, z));
+        const band = new THREE.Mesh(new THREE.BoxGeometry(w - 0.5, fh - 0.45, d - 0.5), glassM);
+        band.position.set(x, y + 0.45 + (fh - 0.45) / 2, z); band.castShadow = true; g.add(band);
+        for (let i = 1; i < w / 0.9; i++) g.add(box(0.06, fh - 0.45, 0.06, 0x9aa5ad, x - w / 2 + 0.25 + i * 0.9, y + 0.45, z + d / 2 - 0.22));
+      }
+      g.add(box(w, 0.6, d, white, x, 1.6 + floors * fh, z));
+      // Solid white end wall with vent slots
+      g.add(box(1.8, floors * fh + 0.6, d, white, x - w / 2 + 0.9, 1.6, z));
+      for (let i = 0; i < 3; i++) g.add(box(1.2, 0.12, 0.05, 0xc9ced2, x - w / 2 + 0.9, 3 + i * 0.8 + floors * fh * 0.5, z + d / 2 + 0.01));
+      return 1.6 + floors * fh + 0.6;
+    };
+    const top = wing(12, 7, 0, 0, 5);
+    wing(6, 6, 8.2, -3, 4);
+    // Keep the white cladding bright even on the shaded face
+    g.traverse(m => {
+      if (m.material && m.material.color.getHex() === white) { m.material.emissive.setHex(0xffffff); m.material.emissiveIntensity = 0.35; }
+    });
+    g.userData.top = top;
+    return g;
+  },
+  // Tapering setback tower with bronze frame and diamond bracing (after JPMorganChase's 270 Park Avenue)
+  tower(c) {
+    const g = new THREE.Group();
+    const bronze = mat(0x9c7a52, { roughness: 0.45, metalness: 0.6 });
+    const glassM = mat(c.color, { roughness: 0.15, metalness: 0.35, emissive: 0x1d2b3d, emissiveIntensity: 0.6 });
+    const strut = (face, x1, y1, x2, y2) => {
+      const len = Math.hypot(x2 - x1, y2 - y1);
+      const s = new THREE.Mesh(new THREE.BoxGeometry(len, 0.12, 0.12), bronze);
+      s.position.set((x1 + x2) / 2, (y1 + y2) / 2, 0);
+      s.rotation.z = Math.atan2(y2 - y1, x2 - x1);
+      face.add(s);
+    };
+    // Splayed legs at the base
+    const lobby = new THREE.Mesh(new THREE.BoxGeometry(4, 2.2, 4), glassM);
+    lobby.position.y = 1.1; g.add(lobby);
+    for (let f = 0; f < 4; f++) {
+      const face = new THREE.Group();
+      face.rotation.y = f * Math.PI / 2;
+      for (const x of [-2.6, -1.3, 0, 1.3, 2.6]) {
+        const leg = new THREE.Mesh(new THREE.BoxGeometry(0.16, 2.4, 0.16), bronze);
+        leg.position.set(x * 0.85, 1.15, 2.6); leg.rotation.set(0.38, 0, -x * 0.08); face.add(leg);
+      }
+      g.add(face);
+    }
+    const tiers = [[6, 7], [5.2, 4.5], [4.2, 3.5], [3.2, 2.8], [2.2, 2]];
+    let y = 2.2;
+    tiers.forEach(([w, h], k) => {
+      const t = new THREE.Mesh(new THREE.BoxGeometry(w, h, w), glassM);
+      t.position.set(0, y + h / 2, 0); t.castShadow = true; g.add(t);
+      for (const sx of [-1, 1]) for (const sz of [-1, 1]) g.add(box(0.18, h, 0.18, 0x9c7a52, sx * w / 2, y, t.position.z + sz * w / 2));
+      g.add(box(w + 0.1, 0.15, w + 0.1, 0x9c7a52, 0, y + h - 0.15, t.position.z));
+      // Diamond bracing on each face
+      for (let f = 0; f < 4; f++) {
+        const face = new THREE.Group();
+        face.rotation.y = f * Math.PI / 2;
+        face.position.z = t.position.z;
+        const inner = new THREE.Group();
+        inner.position.set(0, y, w / 2 + 0.07);
+        strut(inner, 0, 0, -w / 2, h / 2); strut(inner, 0, 0, w / 2, h / 2);
+        strut(inner, -w / 2, h / 2, 0, h); strut(inner, w / 2, h / 2, 0, h);
+        face.add(inner); g.add(face);
+      }
+      y += h;
+    });
+    const crown = new THREE.Mesh(new THREE.ConeGeometry(1.4, 2.2, 4), mat(0xdfe8f0, { roughness: 0.1, metalness: 0.6, emissive: 0xffffff, emissiveIntensity: 0.15 }));
+    crown.rotation.y = Math.PI / 4; crown.position.y = y + 1.1; g.add(crown);
+    // Plaza around the base
+    const plaza = new THREE.Mesh(new THREE.PlaneGeometry(10, 10), mat(0xd6d2ca));
+    plaza.rotation.x = -Math.PI / 2; plaza.position.y = 0.02; g.add(plaza);
+    g.userData.top = y + 2.2;
     return g;
   },
   next(c) {
@@ -372,11 +486,13 @@ CHAPTERS.forEach((c, i) => {
   }
   scene.add(b);
   c.bpos = b.position.clone();
-  c.bh = { bank: 12, glass: 8, campus: 6, next: 2.5 }[c.kind] || 3;
+  const top = b.userData.top || 6;
+  c.bh = c.kind === 'next' ? 2.5 : Math.max(3, top * 0.55);
   if (b.userData.spin) animated.push(b.userData.spin);
 
   const l = label(c.short === 'BTech' ? 'BTech · India' : c.short, c.when.split(' · ')[0], c.chip);
-  l.position.copy(b.position).add(new THREE.Vector3(0, c.kind === 'bank' ? 24 : c.kind === 'glass' ? 16.5 : c.kind === 'campus' ? 14 : 9, 0));
+  l.position.copy(b.position).add(new THREE.Vector3(0, Math.min(top + 2.5, 16.5), 0));
+  if (top + 2.5 > 16.5) { l.material.depthTest = false; l.renderOrder = 10; } // tall tower: sign sits on its face
   if (c.kind === 'next') l.position.y = 7.5;
   scene.add(l);
 });
@@ -574,11 +690,11 @@ function frame() {
   if (atStop > 0) {
     const across = new THREE.Vector3().crossVectors(up, toB).multiplyScalar(narrow ? 2.5 : 5);
     // Phone: the card covers the lower half, so aim below the scene to lift it into the top half
-    const dist = narrow ? 22 + stopC.bh * 1.1 : 13 + stopC.bh * 1.0;
+    const dist = narrow ? 22 + stopC.bh * 1.1 + Math.max(0, stopC.bh - 8) * 1.4 : 13 + stopC.bh * 1.0;
     const camY = narrow ? 9 + stopC.bh * 0.5 : 6 + stopC.bh * 0.45;
     const stopPos = new THREE.Vector3(p.x - toB.x * dist + across.x, camY, p.z - toB.z * dist + across.z);
     const stopLook = new THREE.Vector3(
-      (p.x + stopC.bpos.x) / 2, narrow ? -4 : stopC.bh * 0.8, (p.z + stopC.bpos.z) / 2
+      (p.x + stopC.bpos.x) / 2, narrow ? -4 + Math.max(0, stopC.bh - 6) * 0.9 : stopC.bh * 0.8, (p.z + stopC.bpos.z) / 2
     );
     wantPos = walkPos.clone().lerp(stopPos, atStop);
     wantLook = walkLook.clone().lerp(stopLook, atStop);
