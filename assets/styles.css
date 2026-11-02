@@ -112,6 +112,15 @@ a { color: var(--accent); }
   margin-top: 28px;
 }
 
+.journey-link {
+  display: inline-block;
+  margin-top: 22px;
+  font-size: 17px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.journey-link:hover { text-decoration: underline; }
+
 /* Stats */
 .stats {
   display: grid;

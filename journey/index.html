@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vishal's Journey</title>
+  <meta name="description" content="Walk through Vishal Kurre's career in 3D: from India to Oregon State, Microsoft and J.P. Morgan.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23007AFF'/><text x='32' y='42' font-family='-apple-system,Helvetica,Arial' font-size='28' font-weight='700' fill='white' text-anchor='middle'>VK</text></svg>">
+  <link rel="stylesheet" href="../assets/puppertino.css">
+  <link rel="stylesheet" href="journey.css">
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+  </script>
+</head>
+<body class="p-auto-dark-mode">
+  <canvas id="scene" aria-hidden="true"></canvas>
+
+  <header class="topbar">
+    <a class="brand" href="../">← Vishal Kurre</a>
+    <span class="hint" id="hint">Scroll to walk</span>
+  </header>
+
+  <!-- Chapter rail -->
+  <nav class="rail" id="rail" aria-label="Chapters"></nav>
+
+  <!-- Story cards (also the readable text version of the page) -->
+  <main class="cards" id="cards"></main>
+
+  <div class="progress"><div class="progress-bar" id="bar"></div></div>
+
+  <!-- Scroll track that drives the walk -->
+  <div id="track"></div>
+
+  <noscript><p class="noscript">This page needs JavaScript. <a href="../">See the plain portfolio.</a></p></noscript>
+
+  <script type="module" src="journey.js"></script>
+</body>
+</html>
